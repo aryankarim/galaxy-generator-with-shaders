@@ -1,32 +1,29 @@
 // @ts-ignore
-import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
-import { camera, renderer } from '../../environment/renderer'
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
+import { camera, renderer } from "../../environment/renderer";
 
 function resizeRendererToDisplaySize(renderer: any) {
-  const canvas = renderer.domElement
-  const width = canvas.clientWidth
-  const height = canvas.clientHeight
+  const canvas = renderer.domElement;
+  const width = canvas.clientWidth;
+  const height = canvas.clientHeight;
 
-  const needResize = canvas.width !== width || canvas.height !== height
+  const needResize = canvas.width !== width || canvas.height !== height;
+  console.log(canvas.width);
   if (needResize) {
-    renderer.setSize(width, height, false)
+    renderer.setSize(width, height, false);
   }
 
-  return needResize
+  return needResize;
 }
 
 export const checkForResize = () => {
   if (resizeRendererToDisplaySize(renderer)) {
-    const canvas = renderer.domElement
-    camera.camera.aspect = canvas.clientWidth / canvas.clientHeight
-    camera.camera.updateProjectionMatrix()
+    const canvas = renderer.domElement;
+    camera.camera.aspect = canvas.clientWidth / canvas.clientHeight;
+    camera.camera.updateProjectionMatrix();
   }
-}
+};
 
-export const controls = new OrbitControls(camera.camera, renderer.domElement)
+export const controls = new OrbitControls(camera.camera, renderer.domElement);
 
-controls.update()
-controls.maxPolarAngle = 1.5
-controls.minDistance = 4
-controls.maxDistance = 10
-controls.enableDamping = true
+controls.enableDamping = true;

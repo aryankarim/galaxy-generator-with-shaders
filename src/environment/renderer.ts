@@ -1,34 +1,33 @@
-import * as THREE from 'three'
-import { Camera } from './camera'
+import * as THREE from "three";
+import { Camera } from "./camera";
 
-THREE.ColorManagement.enabled = false
+THREE.ColorManagement.enabled = false;
 
-const textureLoader = new THREE.TextureLoader()
+const textureLoader = new THREE.TextureLoader();
 
-const camera = new Camera()
+const camera = new Camera();
 
-let scene = new THREE.Scene()
+let scene = new THREE.Scene();
 
-const ambientLight = new THREE.AmbientLight('#ffffff', 0.1)
-scene.add(ambientLight)
+const ambientLight = new THREE.AmbientLight("#ffffff", 0.1);
+scene.add(ambientLight);
 
 // Directional light
-const moonLight = new THREE.DirectionalLight('#ffffff', 0.1)
-moonLight.castShadow = true
-moonLight.shadow.mapSize.width = 256
-moonLight.shadow.mapSize.height = 256
-moonLight.shadow.camera.far = 15
-moonLight.position.set(4, 5, -2)
-scene.add(moonLight)
+const moonLight = new THREE.DirectionalLight("#ffffff", 0.1);
+moonLight.castShadow = true;
+moonLight.shadow.mapSize.width = 256;
+moonLight.shadow.mapSize.height = 256;
+moonLight.shadow.camera.far = 15;
+moonLight.position.set(4, 5, -2);
+scene.add(moonLight);
 
-const canvas = document.querySelector('#c') as HTMLCanvasElement
-const renderer = new THREE.WebGLRenderer({ antialias: true, canvas })
+const canvas = document.querySelector("#c") as HTMLCanvasElement;
+const renderer = new THREE.WebGLRenderer({ antialias: true, canvas });
 
-renderer.outputColorSpace = THREE.LinearSRGBColorSpace
-renderer.shadowMap.enabled = true
-renderer.shadowMap.type = THREE.PCFSoftShadowMap
-renderer.setClearColor('#262837')
-renderer.setSize(window.innerWidth, window.innerHeight)
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.setClearColor("#262837");
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-export { camera, scene, renderer, textureLoader }
+export { camera, scene, renderer, textureLoader };

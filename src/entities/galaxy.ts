@@ -11,6 +11,7 @@ export class Galaxy {
   randomnessPower = 3;
   insideColor = "#ff6030";
   outsideColor = "#1b3984";
+
   geometry: null | THREE.BufferGeometry = null;
   material: null | THREE.PointsMaterial = null;
   points: null | THREE.Points = null;

@@ -7,15 +7,15 @@ const flareTexture = textureLoader.load("/flare.png");
 
 export class Galaxy {
   count = 100000;
-  size = 0.01;
-  radius = 5;
+  size = 0.024;
+  radius = 11.5;
   branches = 3;
   spin = 1;
-  randomness = 0.2;
+  speed = 0.001;
+  randomness = 0.525;
   randomnessPower = 3;
-  speed = 0.1;
-  insideColor = "#ff6030";
-  outsideColor = "#1b3984";
+  insideColor = "#d94c20";
+  outsideColor = "#1841aa";
 
   geometry: null | THREE.BufferGeometry = null;
   material: null | THREE.PointsMaterial = null;

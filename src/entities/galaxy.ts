@@ -1,6 +1,10 @@
 import { scene } from "../environment/renderer";
 import * as THREE from "three";
 
+const textureLoader = new THREE.TextureLoader();
+
+const flareTexture = textureLoader.load("/flare.png");
+
 export class Galaxy {
   count = 100000;
   size = 0.01;
@@ -9,24 +13,29 @@ export class Galaxy {
   spin = 1;
   randomness = 0.2;
   randomnessPower = 3;
+  speed = 0.1;
   insideColor = "#ff6030";
   outsideColor = "#1b3984";
 
   geometry: null | THREE.BufferGeometry = null;
   material: null | THREE.PointsMaterial = null;
   points: null | THREE.Points = null;
+  galaxy: null | THREE.Group = null;
 
   generateGalaxy() {
     // Destroy old galaxy
-    if (this.points !== null && this.geometry !== null && this.material !== null) {
+    if (this.points !== null && this.geometry !== null && this.material !== null && this.galaxy !== null) {
       this.geometry.dispose();
       this.material.dispose();
-      scene.remove(this.points);
+      this.galaxy.remove(this.points);
+      scene.remove(this.galaxy);
     }
 
     /**
      * Geometry
      */
+
+    this.galaxy = new THREE.Group();
     this.geometry = new THREE.BufferGeometry();
 
     const positions = new Float32Array(this.count * 3);
@@ -44,12 +53,9 @@ export class Galaxy {
       const spinAngle = radius * this.spin;
       const branchAngle = ((i % this.branches) / this.branches) * Math.PI * 2;
 
-      const randomX =
-        Math.pow(Math.random(), this.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * this.randomness * radius;
-      const randomY =
-        Math.pow(Math.random(), this.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * this.randomness * radius;
-      const randomZ =
-        Math.pow(Math.random(), this.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * this.randomness * radius;
+      const randomX = Math.pow(Math.random(), this.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * this.randomness * radius;
+      const randomY = Math.pow(Math.random(), this.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * this.randomness * radius;
+      const randomZ = Math.pow(Math.random(), this.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * this.randomness * radius;
 
       positions[i3] = Math.cos(branchAngle + spinAngle) * radius + randomX;
       positions[i3 + 1] = randomY;
@@ -70,18 +76,22 @@ export class Galaxy {
     /**
      * Material
      */
+
     this.material = new THREE.PointsMaterial({
       size: this.size,
       sizeAttenuation: true,
       depthWrite: false,
       blending: THREE.AdditiveBlending,
       vertexColors: true,
+      map: flareTexture,
     });
 
     /**
      * Points
      */
     this.points = new THREE.Points(this.geometry, this.material);
-    scene.add(this.points);
+
+    this.galaxy.add(this.points);
+    scene.add(this.galaxy);
   }
 }

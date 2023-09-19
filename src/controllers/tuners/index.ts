@@ -34,6 +34,12 @@ gui
   .step(0.001)
   .onFinishChange(() => galaxy.generateGalaxy());
 gui
+  .add(galaxy, "speed")
+  .min(-0.1)
+  .max(0.1)
+  .step(0.0001)
+  .onFinishChange(() => galaxy.generateGalaxy());
+gui
   .add(galaxy, "randomness")
   .min(0)
   .max(2)

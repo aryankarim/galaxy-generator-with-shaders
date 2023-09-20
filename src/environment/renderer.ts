@@ -27,7 +27,10 @@ const renderer = new THREE.WebGLRenderer({ antialias: true, canvas });
 renderer.outputColorSpace = THREE.LinearSRGBColorSpace;
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-renderer.setClearColor("#262837");
+
+export const bgColor = { backgroundColor: "#010101" };
+
+renderer.setClearColor(bgColor.backgroundColor);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
 export { camera, scene, renderer, textureLoader };

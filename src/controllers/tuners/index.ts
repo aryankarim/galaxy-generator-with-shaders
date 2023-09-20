@@ -1,5 +1,6 @@
 import * as dat from "lil-gui";
 import { galaxy } from "../../environment/paint";
+import { bgColor, renderer } from "../../environment/renderer";
 
 const gui = new dat.GUI();
 
@@ -53,3 +54,6 @@ gui
   .onFinishChange(() => galaxy.generateGalaxy());
 gui.addColor(galaxy, "insideColor").onFinishChange(() => galaxy.generateGalaxy());
 gui.addColor(galaxy, "outsideColor").onFinishChange(() => galaxy.generateGalaxy());
+gui.addColor(bgColor, "backgroundColor").onFinishChange((val: string) => {
+  renderer.setClearColor(val);
+});

@@ -1,5 +1,3 @@
-// @ts-ignore
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { camera, renderer } from "../../environment/renderer";
 
 function resizeRendererToDisplaySize(renderer: any) {
@@ -22,7 +20,3 @@ export const checkForResize = () => {
     camera.camera.updateProjectionMatrix();
   }
 };
-
-export const controls = new OrbitControls(camera.camera, renderer.domElement);
-
-controls.enableDamping = true;

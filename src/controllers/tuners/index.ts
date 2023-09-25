@@ -1,6 +1,8 @@
 import * as dat from "lil-gui";
 import { galaxy } from "../../environment/paint";
 import { bgColor, renderer } from "../../environment/renderer";
+import { flyControls } from "../listeners/flyControl";
+import { orbitControls } from "../listeners/orbitControl";
 
 const gui = new dat.GUI();
 
@@ -57,3 +59,17 @@ gui.addColor(galaxy, "outsideColor").onFinishChange(() => galaxy.generateGalaxy(
 gui.addColor(bgColor, "backgroundColor").onFinishChange((val: string) => {
   renderer.setClearColor(val);
 });
+
+gui
+  .add({ control: "fly" }, "control")
+  .options(["fly", "orbit"])
+  .onChange((val: string) => {
+    console.log(val);
+    if (val == "fly") {
+      orbitControls.enabled = false;
+      flyControls.enabled = true;
+    } else {
+      flyControls.enabled = false;
+      orbitControls.enabled = true;
+    }
+  });

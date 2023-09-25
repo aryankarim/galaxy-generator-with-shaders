@@ -11,7 +11,7 @@ export class Galaxy {
   radius = 11.5;
   branches = 3;
   spin = 1;
-  speed = 0.001;
+  speed = 0.0005;
   randomness = 0.525;
   randomnessPower = 3;
   insideColor = "#ec4d18";

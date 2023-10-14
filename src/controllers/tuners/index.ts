@@ -40,7 +40,7 @@ gui
   .add(galaxy, "speed")
   .min(-0.1)
   .max(0.1)
-  .step(0.0001)
+  .step(0.00001)
   .onFinishChange(() => galaxy.generateGalaxy());
 gui
   .add(galaxy, "randomness")

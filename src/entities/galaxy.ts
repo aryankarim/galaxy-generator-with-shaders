@@ -43,6 +43,7 @@ export class Galaxy {
     const positions = new Float32Array(this.count * 3);
     const colors = new Float32Array(this.count * 3);
     const sizes = new Float32Array(this.count * 1);
+    const randoms = new Float32Array(this.count * 3);
 
     const colorInside = new THREE.Color(this.insideColor);
     const colorOutside = new THREE.Color(this.outsideColor);
@@ -56,13 +57,17 @@ export class Galaxy {
       const spinAngle = radius * this.spin;
       const branchAngle = ((i % this.branches) / this.branches) * Math.PI * 2;
 
+      positions[i3] = Math.cos(branchAngle + spinAngle) * radius;
+      positions[i3 + 1] = 0;
+      positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * radius;
+
       const randomX = Math.pow(Math.random(), this.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * this.randomness * radius;
       const randomY = Math.pow(Math.random(), this.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * this.randomness * radius;
       const randomZ = Math.pow(Math.random(), this.randomnessPower) * (Math.random() < 0.5 ? 1 : -1) * this.randomness * radius;
 
-      positions[i3] = Math.cos(branchAngle + spinAngle) * radius + randomX;
-      positions[i3 + 1] = randomY;
-      positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * radius + randomZ;
+      randoms[i3] = randomX;
+      randoms[i3 + 1] = randomY;
+      randoms[i3 + 2] = randomZ;
 
       // Color
       const mixedColor = colorInside.clone();
@@ -79,6 +84,7 @@ export class Galaxy {
     this.geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
     this.geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
     this.geometry.setAttribute("aSize", new THREE.BufferAttribute(sizes, 1));
+    this.geometry.setAttribute("aRandom", new THREE.BufferAttribute(randoms, 3));
 
     /**
      * Material
@@ -91,7 +97,8 @@ export class Galaxy {
       vertexShader: galaxyVertexShader,
       fragmentShader: galaxyFragmentShader,
       uniforms: {
-        uSize: { value: 8 * renderer.getPixelRatio() },
+        uSize: { value: 30 * renderer.getPixelRatio() },
+        uTime: { value: 0 },
       },
     });
 

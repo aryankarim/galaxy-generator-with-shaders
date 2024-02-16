@@ -7,7 +7,7 @@ import { orbitControls } from "../listeners/orbitControl";
 
 var clock = new THREE.Clock();
 export const actions = () => {
-  spinGalaxy();
+  spinGalaxy(clock);
   checkForResize();
   orbitControls.update();
   flyControls.update(clock.getDelta());

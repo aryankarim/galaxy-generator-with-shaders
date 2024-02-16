@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { scene } from "../environment/renderer";
+import { renderer, scene } from "../environment/renderer";
 import galaxyVertexShader from "./shaders/galaxy/vertex.glsl";
 import galaxyFragmentShader from "./shaders/galaxy/fragment.glsl";
 
@@ -42,6 +42,7 @@ export class Galaxy {
 
     const positions = new Float32Array(this.count * 3);
     const colors = new Float32Array(this.count * 3);
+    const sizes = new Float32Array(this.count * 1);
 
     const colorInside = new THREE.Color(this.insideColor);
     const colorOutside = new THREE.Color(this.outsideColor);
@@ -70,10 +71,14 @@ export class Galaxy {
       colors[i3] = mixedColor.r;
       colors[i3 + 1] = mixedColor.g;
       colors[i3 + 2] = mixedColor.b;
+
+      // Sizes
+      sizes[i] = Math.random();
     }
 
     this.geometry.setAttribute("position", new THREE.BufferAttribute(positions, 3));
     this.geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+    this.geometry.setAttribute("aSize", new THREE.BufferAttribute(sizes, 1));
 
     /**
      * Material
@@ -85,6 +90,9 @@ export class Galaxy {
       vertexColors: true,
       vertexShader: galaxyVertexShader,
       fragmentShader: galaxyFragmentShader,
+      uniforms: {
+        uSize: { value: 8 * renderer.getPixelRatio() },
+      },
     });
 
     /**

@@ -1,10 +1,14 @@
+uniform float uSize;
+attribute float aSize;
+
 void main()
 {
-    vec4 modelPosition = modelMatrix * vec4(position, 1.0);
-    vec4 viewPosition = viewMatrix * modelPosition;
-    vec4 projectedPosition = projectionMatrix * viewPosition;
+    vec4 mPosition = modelMatrix * vec4(position, 1.0);
+    vec4 mvPosition = viewMatrix * mPosition;
+    vec4 mvpPosition = projectionMatrix * mvPosition;
 
-    gl_Position = projectedPosition;
+    gl_Position = mvpPosition;
 
-    gl_PointSize = 2.0;
+    gl_PointSize = uSize * aSize ;
+    gl_PointSize *= -(1.0 / mvPosition.z);
 }

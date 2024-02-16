@@ -77,13 +77,26 @@ export class Galaxy {
      * Material
      */
 
-    this.material = new THREE.PointsMaterial({
-      size: this.size,
-      sizeAttenuation: true,
+    this.material = new THREE.ShaderMaterial({
       depthWrite: false,
       blending: THREE.AdditiveBlending,
       vertexColors: true,
-      map: flareTexture,
+      vertexShader: `
+        void main(){
+          vec4 modelPosition = modelMatrix * vec4(position, 1.0);
+          vec4 viewPosition = viewMatrix * modelPosition;
+          vec4 projectedPosition = projectionMatrix * viewPosition;
+
+          gl_Position = projectedPosition;
+
+          gl_PointSize = 2.0;
+        }
+      `,
+      fragmentShader: `
+      void main(){
+        gl_FragColor = vec4(1.0);
+      }
+      `,
     });
 
     /**

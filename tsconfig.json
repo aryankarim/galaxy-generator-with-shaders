@@ -5,6 +5,9 @@
     "module": "ESNext",
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "skipLibCheck": true,
+    "types": [
+      "vite-plugin-glsl/ext"
+    ],
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -17,7 +20,8 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
   },
   "include": ["src"]
 }

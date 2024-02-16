@@ -1,5 +1,7 @@
-import { scene } from "../environment/renderer";
 import * as THREE from "three";
+import { scene } from "../environment/renderer";
+import galaxyVertexShader from "./shaders/galaxy/vertex.glsl";
+import galaxyFragmentShader from "./shaders/galaxy/fragment.glsl";
 
 const textureLoader = new THREE.TextureLoader();
 
@@ -18,7 +20,7 @@ export class Galaxy {
   outsideColor = "#00ffcc";
 
   geometry: null | THREE.BufferGeometry = null;
-  material: null | THREE.PointsMaterial = null;
+  material: null | THREE.ShaderMaterial = null;
   points: null | THREE.Points = null;
   galaxy: null | THREE.Group = null;
 
@@ -81,22 +83,8 @@ export class Galaxy {
       depthWrite: false,
       blending: THREE.AdditiveBlending,
       vertexColors: true,
-      vertexShader: `
-        void main(){
-          vec4 modelPosition = modelMatrix * vec4(position, 1.0);
-          vec4 viewPosition = viewMatrix * modelPosition;
-          vec4 projectedPosition = projectionMatrix * viewPosition;
-
-          gl_Position = projectedPosition;
-
-          gl_PointSize = 2.0;
-        }
-      `,
-      fragmentShader: `
-      void main(){
-        gl_FragColor = vec4(1.0);
-      }
-      `,
+      vertexShader: galaxyVertexShader,
+      fragmentShader: galaxyFragmentShader,
     });
 
     /**
